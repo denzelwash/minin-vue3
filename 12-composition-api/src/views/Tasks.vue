@@ -1,28 +1,46 @@
 <template>
-  <h1 class="text-white center">Задач пока нет</h1>
-  <template >
-    <h3 class="text-white">Всего активных задач: 0</h3>
-    <div class="card">
-      <h2 class="card-title">
-        Название задачи
-        <AppStatus :type="'done'" />
-      </h2>
-      <p>
-        <strong>
-          <small>
-            {{new Date().toLocaleDateString()}}
-          </small>
-        </strong>
-      </p>
-      <button class="btn primary">Посмотреть</button>
-    </div>
-  </template>
+  <AppLoader v-if="loading"></AppLoader>
+  <div v-else>
+    <h1 class="text-white center" v-if="!tasks.length">Задач пока нет</h1>
+    <template v-else>
+      <h3 class="text-white">Всего активных задач: {{ activeTasksLength }}</h3>
+      <AppTask 
+        v-for="task in tasks"
+        :key="task.id"
+        :task="task"
+      ></AppTask>
+    </template>
+  </div>
 </template>
 
 <script>
-import AppStatus from '../components/AppStatus'
+import {onBeforeMount, ref, computed} from 'vue'
+import {useStore} from 'vuex'
+import AppLoader from '@/components/AppLoader'
+import AppTask from '@/components/AppTask'
 
 export default {
-  components: {AppStatus}
+  components: {AppLoader, AppTask},
+  setup() {
+    const store = useStore()
+    const loading = ref(false)
+    const tasks = ref([])
+
+    const activeTasksLength = computed(() => {
+      return tasks.value.filter((item) => item.status === 'active').length
+    })
+
+    onBeforeMount(async () => {
+      loading.value = true
+      tasks.value = await store.dispatch('allTasks')
+      loading.value = false
+    })
+
+    return {
+      loading,
+      tasks,
+      activeTasksLength
+    }
+  }
 }
 </script>

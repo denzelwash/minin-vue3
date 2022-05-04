@@ -18,17 +18,25 @@
 
     <button class="btn primary" :disabled="isSubmitBtnDisabled">Создать</button>
   </form>
+  <AppLoader v-if="loading"></AppLoader>
 </template>
 
 
 <script>
 import {ref, computed} from 'vue'
+import {useStore} from 'vuex';
+import {useRouter} from 'vue-router'
+import AppLoader from '@/components/AppLoader'
 
 export default {
+  components: {AppLoader},
   setup() {
+    const store = useStore()
+    const router = useRouter()
     const title = ref('')
     const date = ref('')
     const desc = ref('')
+    const loading = ref(false)
 
     const isSubmitBtnDisabled = computed(() => {
       let disabled = true
@@ -38,8 +46,19 @@ export default {
       return disabled
     })
 
-    const submitForm = () => {
-      console.log(555);
+    const submitForm = async () => {
+      const status = Date.parse(date.value) > new Date() ? 'active' : 'cancelled'
+      loading.value = true
+      const task = await store.dispatch('addTask', {
+        title: title.value,
+        date: date.value,
+        desc: desc.value,
+        status 
+      })
+      if (task) {
+        router.push('/')
+      }
+      loading.value = false
     }
 
     return {
@@ -47,7 +66,8 @@ export default {
       date,
       desc,
       isSubmitBtnDisabled,
-      submitForm
+      submitForm,
+      loading
     }
   }
 }
