@@ -25,7 +25,7 @@ export default {
     },
     actions: {
         async login({commit}, payload) {
-            commit('setToken', 'TEST_TOKEN')
+            commit('setToken', JSON.stringify(payload))
         }
     },
 }
