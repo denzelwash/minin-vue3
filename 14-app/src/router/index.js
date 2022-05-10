@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.auth && store.getters['auth/isAuth']) {
     next()
   } else if (to.meta.auth && !store.getters['auth/isAuth']) {
-    next('/auth')
+    next('/auth?message=auth')
   } else {
     next()
   }
