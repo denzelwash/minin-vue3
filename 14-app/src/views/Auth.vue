@@ -50,7 +50,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
 
-		if (route.query.message) {
+		if (route.query.message === 'auth') {
 			store.commit('setMessage', {
 				text: 'Необходима авторизация',
 				type: 'warning'

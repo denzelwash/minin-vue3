@@ -525,3 +525,15 @@ h3 {
 .question-title {
     font-weight: bold;
 }
+
+.page-card {
+	margin-top: 100px;
+}
+
+.flex {
+	display: flex;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
