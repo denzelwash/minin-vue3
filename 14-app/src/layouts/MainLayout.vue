@@ -1,6 +1,7 @@
 <template>
   <TheNavbar></TheNavbar>
   <div class="container">
+		<AppMessage></AppMessage>
     <router-view></router-view>
   </div>
 </template>

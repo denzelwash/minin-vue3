@@ -1,5 +1,5 @@
 <template>
-	<div v-if="message" :class="['alert', 'text-left', message.type]">
+	<div v-if="message" :class="['page-card alert', 'text-left', message.type]">
 		<p>{{ messageMap[message.type] }}</p>
 		<p>{{ message.text }}</p>
 		<span class="alert-close" @click="close">&times;</span>
@@ -9,7 +9,6 @@
 <script>
 import {computed} from 'vue'
 import {useStore} from 'vuex'
-import {useRoute} from 'vue-router'
 
 export default {
 	setup() {

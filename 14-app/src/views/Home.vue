@@ -3,17 +3,18 @@
 		<template #header>
 			<button class="btn primary" @click="modal = true">Создать</button>
 		</template>
-		<RequestTable :requests="[]"></RequestTable>
+		<RequestTable :requests="requests"></RequestTable>
 		<teleport to="body">
 			<AppModal v-if="modal" :title="'Создать завку'" @close="modal = false">
-				<RequestModal></RequestModal>
+				<RequestModal @close="modal = false"></RequestModal>
 			</AppModal>
 		</teleport>
 	</ThePage>
 </template>
 
 <script>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
+import {useStore} from 'vuex'
 import ThePage from '@/components/ThePage'
 import RequestTable from '@/components/request/RequestTable'
 import AppModal from '@/components/AppModal'
@@ -27,10 +28,15 @@ export default {
 		RequestModal
 	},
 	setup() {
+		const store = useStore()
 		const modal = ref(false)
+		const requests = computed(() => {
+			return store.getters['request/getRequests']
+		})
 
 		return {
-			modal
+			modal,
+			requests
 		}
 	}
 }

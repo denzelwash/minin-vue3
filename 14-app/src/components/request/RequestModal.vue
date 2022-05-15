@@ -31,7 +31,7 @@
 		<FormKit
 			type="number"
 			label="Сумма"
-			name="phone"
+			name="summ"
 			step="1"
 			:validation="[['required']]"
 			:validation-messages="{
@@ -44,6 +44,7 @@
 			label="Статус"
 			name="status"
 			placeholder="Выберите статус"
+			value="active"
 			:options="{
 				done: 'Завершен',
 				canceled: 'Отменен',
@@ -62,15 +63,18 @@
 
 <script>
 import {ref} from 'vue'
+import {useStore} from 'vuex'
 
 export default {
-	setup() {
+	emits: ['close'],
+	setup(props, {emit}) {
+		const store = useStore()
 		const formData = ref({})
-		const submit = (data) => {
-			console.log(data);
-			console.log(formData.value);
+		const submit = async (data) => {
+			await store.dispatch('request/create', data)
+			emit('close')
 		}
-
+		
 		return {
 			formData,
 			submit

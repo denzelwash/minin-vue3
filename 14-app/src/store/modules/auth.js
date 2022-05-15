@@ -27,7 +27,7 @@ export default {
 		}
 	},
 	actions: {
-		async login({commit}, form) {
+		async login({commit, dispatch}, form) {
 			try {
 				const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FIREBASE_KEY}`
 				const {data} = await axios.post(url, {
@@ -37,11 +37,10 @@ export default {
 				commit('setToken', data.idToken)
 				commit('clearMessage', null, {root: true})
 			} catch(e) {
-				commit('setMessage', {
+				dispatch('setMessage', {
 					text: firebaseError(e.response.data.error.message),
 					type: 'danger'
-				}, 
-				{root: true})
+				}, {root: true})
 				throw new Error(firebaseError(e.response.data.error.message))
 			}
 		}
