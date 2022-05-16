@@ -57,7 +57,7 @@
 			}"
 			wrapper-class="$reset form-control"
 		/>
-		<button class="btn primary" type="submit">Войти</button>
+		<button class="btn primary" type="submit">Создать</button>
 	</FormKit>
 </template>
 
