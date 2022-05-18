@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home'
 import Help from '@/views/Help'
 import Auth from '@/views/Auth'
+import Request from '@/views/Request'
 import store from '@/store'
 
 const routes = [
@@ -18,6 +19,15 @@ const routes = [
     path: '/help',
     name: 'Help',
     component: Help,
+    meta: {
+      layout: 'Main',
+      auth: true
+    }
+  },
+  {
+    path: '/request/:id',
+    name: 'Request',
+    component: Request,
     meta: {
       layout: 'Main',
       auth: true

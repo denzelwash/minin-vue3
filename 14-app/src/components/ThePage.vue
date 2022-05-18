@@ -1,5 +1,8 @@
 <template>
 	<div class="card page-card">
+		<div class="breadcrumbs text-left" v-if="back">
+			<router-link to="/">Вернуться на главную</router-link>
+		</div>
 		<h1 class="card-title">
 			<span>{{ title }}</span>
 			<slot name="header"></slot>
@@ -14,6 +17,9 @@ export default {
 		title: {
 			type: String,
 			required: true
+		},
+		back: {
+			type: Boolean
 		}
 	}
 }

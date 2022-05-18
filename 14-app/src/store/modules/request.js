@@ -60,6 +60,48 @@ export default {
 					type: 'danger'
 				}, {root: true})
 			}
+		},
+		async loadRequest({commit, dispatch, rootGetters}, id) {
+			try {
+				const token = rootGetters['auth/token']
+				const {data} = await axios.get(`/requests/${id}.json?auth=${token}`)
+				return data
+			} catch(e) {
+				dispatch('setMessage', {
+					text: e.message,
+					type: 'danger'
+				}, {root: true})
+			}
+		},
+		async remove({dispatch, rootGetters}, id) {
+			try {
+				const token = rootGetters['auth/token']
+				await axios.delete(`/requests/${id}.json?auth=${token}`)
+				dispatch('setMessage', {
+					text: 'Заявка успешно удалена',
+					type: 'primary'
+				}, {root: true})
+			} catch(e) {
+				dispatch('setMessage', {
+					text: e.message,
+					type: 'danger'
+				}, {root: true})
+			}
+		},
+		async update({dispatch, rootGetters}, request) {
+			try {
+				const token = rootGetters['auth/token']
+				await axios.put(`/requests/${request.id}.json?auth=${token}`, request)
+				dispatch('setMessage', {
+					text: 'Заявка успешно обновлена',
+					type: 'primary'
+				}, {root: true})
+			} catch(e) {
+				dispatch('setMessage', {
+					text: e.message,
+					type: 'danger'
+				}, {root: true})
+			}
 		}
 	},
 }

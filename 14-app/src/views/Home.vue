@@ -1,5 +1,5 @@
 <template>
-	<Loader v-if="loading"></Loader>
+	<AppLoader v-if="loading"></AppLoader>
 	<ThePage v-else title="Список заявок">
 		<template #header>
 			<button class="btn primary" @click="modal = true">Создать</button>
@@ -22,7 +22,7 @@ import RequestTable from '@/components/request/RequestTable'
 import RequestFilter from '@/components/request/RequestFilter'
 import AppModal from '@/components/AppModal'
 import RequestModal from '@/components/request/RequestModal'
-import Loader from '@/components/Loader'
+import AppLoader from '@/components/AppLoader'
 
 export default {
 	components: {
@@ -30,7 +30,7 @@ export default {
 		RequestTable,
 		AppModal,
 		RequestModal,
-		Loader,
+		AppLoader,
 		RequestFilter
 	},
 	setup() {
