@@ -10,7 +10,7 @@
         <router-link to="/help">Помощь</router-link>
       </li>
       <li>
-        <a href="#">Сообщения</a>
+        <a href="#" @click.prevent="toggleSidebar">Сообщения</a>
       </li>
       <li>
         <a href="#" @click.prevent="logout">Выход</a>
@@ -33,8 +33,14 @@ export default {
       router.push('/auth')
     }
 
+		const toggleSidebar = () => {
+			const status = store.getters['sidebar']
+			status ? store.commit('closeSidebar') : store.commit('openSidebar')
+		}
+
     return {
-      logout
+      logout,
+			toggleSidebar
     }
   }
 }
